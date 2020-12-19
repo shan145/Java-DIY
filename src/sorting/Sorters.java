@@ -77,6 +77,7 @@ public class Sorters {
 		}
 	}
 	
+	
 	/*
 	 * Merge Sorts (iterative and recursive)
 	 */
@@ -91,7 +92,7 @@ public class Sorters {
 			int mid = (start+end)/2;
 			mergeSort(array, tempArray, start, mid);
 			mergeSort(array, tempArray, mid+1, end);
-			merge(array, tempArray, start, mid, end);
+			if(array[mid].compareTo(array[mid+1]) > 0) merge(array, tempArray, start, mid, end);
 		}
 	}
 	
@@ -121,6 +122,7 @@ public class Sorters {
 			startHalf1++;
 			index++;
 		}
+		
 		while(startHalf2 <= endHalf2) {
 			tempArray[index] = array[startHalf2];
 			startHalf2++;
@@ -131,6 +133,42 @@ public class Sorters {
 		for(int k = start; k <= end; k++) {
 			array[k] = tempArray[k];
 		}
+	}
+	
+	/*
+	 * Quick Sort (Recursive)
+	 */
+	public static <T extends Comparable<? super T>> void quickSort(T[] array, int start, int end) {
+		if (end > start) {
+			int pivotIndex = partition(array, start, end);
+			quickSort(array, start, pivotIndex-1);
+			quickSort(array, pivotIndex+1, end);
+		}
+	}
+	
+	private static <T extends Comparable<? super T>> int partition(T[] array, int start, int end) {
+		T pivot = array[start];
+		int low = start + 1;
+		int high = end;
+		
+		while (high > low) {
+			while(low <= high && array[low].compareTo(pivot) <= 0) low++;
+			while(low <= high && array[high].compareTo(pivot) > 0) high--;
+			if(high > low) {
+				swap(array, low, high);
+			}
+		}
+		
+		// Since pivot is at start in our case, we move it down until it reaches the starting pivot
+		while (high > start && array[high].compareTo(pivot) >= 0) high--;
+		
+		// Swap pivot with array[high]
+		if(pivot.compareTo(array[high]) > 0) {
+			array[start] = array[high];
+			array[high] = pivot;
+			return high;
+		}
+		return start;
 	}
 	
 }
