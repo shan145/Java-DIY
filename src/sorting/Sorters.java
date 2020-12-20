@@ -32,12 +32,6 @@ public class Sorters {
 		return indexOfMin;
 	}
 	
-	private static <T> void swap (T[] array, int i, int j) {
-		T temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
-	
 	
 	/*
 	 * Insertion Sorts (iterative and recursive)
@@ -171,4 +165,61 @@ public class Sorters {
 		return start;
 	}
 	
+	public static <T extends Comparable<? super T>> void optimizedQuickSort(T[] array, int start, int end) {
+		if(end-start + 1 < 4) { //array is less than 4 entries
+			insertionSort(array, start, end);
+		}
+		else {
+			int pivotIndex = optimizedPartition(array, start, end);
+			optimizedQuickSort(array, start, pivotIndex-1);
+			optimizedQuickSort(array, pivotIndex+1, end);
+		}
+	}
+	
+	//Assumes array has at least 4 entries
+	private static <T extends Comparable<? super T>> int optimizedPartition(T[] array, int start, int end) {
+		int mid = (start+end)/2;
+		sortFirstMiddleLast(array, start, mid, end);
+		swap(array, mid, end-1);
+		
+		int pivotIndex = end-1;
+		T pivot = array[pivotIndex];
+		
+		int indexFromLeft = start+1;
+		int indexFromRight = end-2;
+		boolean done = false;
+		
+		while(!done) {
+			while (array[indexFromLeft].compareTo(pivot) < 0) indexFromLeft++;
+			while (array[indexFromRight].compareTo(pivot) > 0) indexFromRight--;
+			if (indexFromLeft < indexFromRight) {
+				swap(array, indexFromLeft, indexFromRight);
+				indexFromLeft++;
+				indexFromRight--;
+			} else {
+				done = true;
+			}
+		}
+		
+		swap(array, indexFromLeft, pivotIndex);
+		pivotIndex = indexFromLeft;
+		return pivotIndex;
+	}
+	
+	private static <T extends Comparable<? super T>> void sortFirstMiddleLast(T[] array, int start, int mid, int end) {
+		//Compare start & mid and switch appropriately
+		if(array[start].compareTo(array[mid]) > 0) swap(array, start, mid);
+		
+		//Compare mid & end and switch appropriately
+		if(array[mid].compareTo(array[end]) > 0) swap(array, mid, end);
+		
+		//Compare new start & new mid and switch appropriately
+		if(array[start].compareTo(array[mid]) > 0) swap(array, start, mid);
+	}
+	
+	private static <T> void swap (T[] array, int i, int j) {
+		T temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
 }

@@ -86,4 +86,17 @@ class SortersTest {
 		Sorters.quickSort(array2, 1, array2.length-2);
 		assertTrue(Arrays.equals(expectedArray2, array2));
 	}
+	
+	@Test
+	void testOptimizedQuickSort() {
+		Integer[] array = new Integer[] {9, 1, 3, 4, 2, 8, 6, 5, 7};
+		Integer[] expectedArray = new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+		Sorters.optimizedQuickSort(array, 0, array.length-1);
+		assertTrue(Arrays.equals(expectedArray, array));
+
+		Integer[] array2 = new Integer[] {9, 5, 4, 2, 6, 8, 7};
+		Integer[] expectedArray2 = new Integer[] {9, 2, 4, 5, 6, 8, 7};
+		Sorters.optimizedQuickSort(array2, 1, array2.length-2);
+		assertTrue(Arrays.equals(expectedArray2, array2));
+	}
 }
