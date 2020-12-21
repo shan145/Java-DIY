@@ -73,7 +73,7 @@ public class Sorters {
 	
 	
 	/*
-	 * Merge Sorts (iterative and recursive)
+	 * Merge Sorts (Recursive)
 	 */
 	public static <T extends Comparable<? super T>> void recursiveMergeSort(T[] array, int start, int end) {
 		@SuppressWarnings("unchecked")
@@ -190,9 +190,13 @@ public class Sorters {
 		boolean done = false;
 		
 		while(!done) {
+			// Move up until we find an entry bigger than/equal to pivot
 			while (array[indexFromLeft].compareTo(pivot) < 0) indexFromLeft++;
+			// Move down until we find an entry lesser than/equal to pivot
 			while (array[indexFromRight].compareTo(pivot) > 0) indexFromRight--;
+			
 			if (indexFromLeft < indexFromRight) {
+				// Swap entries around pivot
 				swap(array, indexFromLeft, indexFromRight);
 				indexFromLeft++;
 				indexFromRight--;
