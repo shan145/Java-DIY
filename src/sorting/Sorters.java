@@ -2,8 +2,8 @@ package sorting;
 
 public class Sorters {
 	
-	/*
-	 * Selection Sorts (iterative and recursive)
+	/**
+	 * Regular selection sort for generic array with starting index and ending index
 	 */
 	public static <T extends Comparable<? super T>> void selectionSort(T[] array, int start, int end) {
 		for(int index = start; index <= end; index++) {
@@ -12,11 +12,69 @@ public class Sorters {
 		}
 	}
 	
+	/**
+	 * Recursive selection sort for generic array with starting index and ending index
+	 */
 	public static <T extends Comparable<? super T>> void recursiveSelectionSort(T[] array, int start, int end) {
 		if (start < end) {
 			int indexOfSmallest = getIndexOfNextSmallest(array, start, end);
 			swap(array, start, indexOfSmallest);
 			recursiveSelectionSort(array, start+1, end);
+		}
+	}
+	
+	
+	/**
+	 * Regular insertion sort for generic array with starting index and ending index
+	 */
+	public static <T extends Comparable<? super T>> void insertionSort(T[] array, int start, int end) {
+		for(int index = start+1; index <= end; index++) {
+			T nextToInsert = array[index];
+			insertInOrder(nextToInsert, array, start, index);
+		}
+	}
+	
+	/**
+	 * Recursive insertion sort for generic array with starting index and ending index
+	 */
+	public static <T extends Comparable<? super T>> void recursiveInsertionSort(T[] array, int start, int end) {
+		if(start < end) {
+			recursiveInsertionSort(array, start, end-1);
+			recursiveInsertInOrder(array[end], array, start, end-1);
+		}
+	}
+	
+	/**
+	 * Recursive merge sort for generic array with starting index and ending index
+	 */
+	public static <T extends Comparable<? super T>> void recursiveMergeSort(T[] array, int start, int end) {
+		@SuppressWarnings("unchecked")
+		T[] tempArray = (T[])new Comparable<?>[array.length];
+		mergeSort(array, tempArray, start, end);
+	}
+	
+	/**
+	 * Regular quick sort for generic array with starting index and ending index
+	 */
+	public static <T extends Comparable<? super T>> void quickSort(T[] array, int start, int end) {
+		if (end > start) {
+			int pivotIndex = partition(array, start, end);
+			quickSort(array, start, pivotIndex-1);
+			quickSort(array, pivotIndex+1, end);
+		}
+	}
+	
+	/**
+	 * Optimized quick sort for generic array with starting index and ending index
+	 */
+	public static <T extends Comparable<? super T>> void optimizedQuickSort(T[] array, int start, int end) {
+		if(end-start + 1 < 4) { //array is less than 4 entries
+			insertionSort(array, start, end);
+		}
+		else {
+			int pivotIndex = optimizedPartition(array, start, end);
+			optimizedQuickSort(array, start, pivotIndex-1);
+			optimizedQuickSort(array, pivotIndex+1, end);
 		}
 	}
 	
@@ -32,17 +90,6 @@ public class Sorters {
 		return indexOfMin;
 	}
 	
-	
-	/*
-	 * Insertion Sorts (iterative and recursive)
-	 */
-	public static <T extends Comparable<? super T>> void insertionSort(T[] array, int start, int end) {
-		for(int index = start+1; index <= end; index++) {
-			T nextToInsert = array[index];
-			insertInOrder(nextToInsert, array, start, index);
-		}
-	}
-	
 	private static <T extends Comparable<? super T>> void insertInOrder(T nextToInsert, T[] array, int start, int currentIndex) {
 		while((currentIndex > start) && ((nextToInsert.compareTo(array[currentIndex-1])) < 0)) {
 			array[currentIndex] = array[currentIndex-1];
@@ -51,12 +98,6 @@ public class Sorters {
 		array[currentIndex] = nextToInsert;
 	}
 	
-	public static <T extends Comparable<? super T>> void recursiveInsertionSort(T[] array, int start, int end) {
-		if(start < end) {
-			recursiveInsertionSort(array, start, end-1);
-			recursiveInsertInOrder(array[end], array, start, end-1);
-		}
-	}
 	
 	private static <T extends Comparable<? super T>> void recursiveInsertInOrder(T elementToInsert, T[] array, int start, int end) {
 		if (elementToInsert.compareTo(array[end]) >= 0) {
@@ -71,15 +112,6 @@ public class Sorters {
 		}
 	}
 	
-	
-	/*
-	 * Merge Sorts (Recursive)
-	 */
-	public static <T extends Comparable<? super T>> void recursiveMergeSort(T[] array, int start, int end) {
-		@SuppressWarnings("unchecked")
-		T[] tempArray = (T[])new Comparable<?>[array.length];
-		mergeSort(array, tempArray, start, end);
-	}
 	
 	private static <T extends Comparable<? super T>> void mergeSort(T[] array, T[] tempArray, int start, int end) {
 		if (start < end) {
@@ -129,17 +161,6 @@ public class Sorters {
 		}
 	}
 	
-	/*
-	 * Quick Sort (Recursive)
-	 */
-	public static <T extends Comparable<? super T>> void quickSort(T[] array, int start, int end) {
-		if (end > start) {
-			int pivotIndex = partition(array, start, end);
-			quickSort(array, start, pivotIndex-1);
-			quickSort(array, pivotIndex+1, end);
-		}
-	}
-	
 	private static <T extends Comparable<? super T>> int partition(T[] array, int start, int end) {
 		T pivot = array[start];
 		int low = start + 1;
@@ -163,17 +184,6 @@ public class Sorters {
 			return high;
 		}
 		return start;
-	}
-	
-	public static <T extends Comparable<? super T>> void optimizedQuickSort(T[] array, int start, int end) {
-		if(end-start + 1 < 4) { //array is less than 4 entries
-			insertionSort(array, start, end);
-		}
-		else {
-			int pivotIndex = optimizedPartition(array, start, end);
-			optimizedQuickSort(array, start, pivotIndex-1);
-			optimizedQuickSort(array, pivotIndex+1, end);
-		}
 	}
 	
 	//Assumes array has at least 4 entries
