@@ -48,14 +48,22 @@ public final class ArrayBag<T> implements BagInterface<T> {
 
 	@Override
 	public T remove() {
-		// TODO Auto-generated method stub
-		return null;
+		checkInitialization();
+		T result = null;
+		if(numberOfEntries > 0) {
+			result = bag[numberOfEntries-1];
+			bag[numberOfEntries-1] = null;
+			numberOfEntries--;
+		}
+		return result;
 	}
 
 	@Override
 	public boolean remove(T anEntry) {
-		// TODO Auto-generated method stub
-		return false;
+		checkInitialization();
+		int index = getIndexOf(anEntry);
+		T result = removeEntry(index);
+		return result.equals(anEntry);
 	}
 
 	@Override
@@ -79,7 +87,8 @@ public final class ArrayBag<T> implements BagInterface<T> {
 
 	@Override
 	public boolean contains(T anEntry) {
-		return getFrequencyOf(anEntry) != 0;
+		checkInitialization();
+		return getIndexOf(anEntry) > -1;
 	}
 
 	@Override
@@ -90,6 +99,33 @@ public final class ArrayBag<T> implements BagInterface<T> {
 			result[index] = bag[index];
 		}
 		return result;
+	}
+	
+	private T removeEntry(int givenIndex) {
+		T result = null;
+		if(!isEmpty() && (givenIndex >= 0)) {
+			result = bag[givenIndex];
+			bag[givenIndex] = bag[numberOfEntries-1];
+			
+			bag[givenIndex] = null;
+			numberOfEntries--;
+		}
+		return result;
+	}
+	
+	private int getIndexOf(T anEntry) {
+		int where = -1;
+		boolean stillLooking = true;
+		int index = 0;
+		
+		while(stillLooking && (index < numberOfEntries)) {
+			if(anEntry.equals(bag[index])) {
+				stillLooking = false;
+				where = index;
+			}
+			index++;
+		}
+		return where;
 	}
 	
 	private void checkInitialization() {
