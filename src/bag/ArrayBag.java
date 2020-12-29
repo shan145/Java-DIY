@@ -90,16 +90,6 @@ public final class ArrayBag<T> implements BagInterface<T> {
 		checkInitialization();
 		return getIndexOf(anEntry) > -1;
 	}
-
-	@Override
-	public T[] toArray() {
-		@SuppressWarnings("unchecked")
-		T[] result = (T[])new Object[numberOfEntries];
-		for(int index = 0; index < numberOfEntries; index++) {
-			result[index] = bag[index];
-		}
-		return result;
-	}
 	
 	private T removeEntry(int givenIndex) {
 		T result = null;
