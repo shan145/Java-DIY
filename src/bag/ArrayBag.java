@@ -78,7 +78,7 @@ public final class ArrayBag<T> implements BagInterface<T> {
 		checkInitialization();
 		int frequency = 0;
 		for(T entry: bag) {
-			if(entry.equals(anEntry)) {
+			if(anEntry.equals(entry)) {
 				frequency++;
 			}
 		}
