@@ -8,7 +8,7 @@ class BagTest {
 	void testArrayBagMethods() {
 		BagInterface<Integer> arrayBag = new ArrayBag<Integer>();
 		assertTrue(arrayBag.isEmpty());
-		assertEquals(arrayBag.getCurrentSize(), 0);
+		assertEquals(0, arrayBag.getCurrentSize());
 		
 		arrayBag.add(0);
 		arrayBag.add(1);
@@ -17,30 +17,30 @@ class BagTest {
 		arrayBag.add(3);
 		arrayBag.add(4);
 		arrayBag.add(4);
-		assertEquals(arrayBag.getCurrentSize(), 7);
+		assertEquals(7, arrayBag.getCurrentSize());
 		
 		assertTrue(arrayBag.contains(0));
-		assertEquals(arrayBag.getFrequencyOf(0), 1);
+		assertEquals(1, arrayBag.getFrequencyOf(0));
 		
 		assertTrue(arrayBag.contains(1));
-		assertEquals(arrayBag.getFrequencyOf(1), 1);
+		assertEquals(1, arrayBag.getFrequencyOf(1));
 		
 		assertTrue(arrayBag.contains(2));
-		assertEquals(arrayBag.getFrequencyOf(2), 1);
+		assertEquals(1, arrayBag.getFrequencyOf(2));
 		
 		assertTrue(arrayBag.contains(3));
-		assertEquals(arrayBag.getFrequencyOf(3), 2);
+		assertEquals(2, arrayBag.getFrequencyOf(3));
 		
 		assertTrue(arrayBag.contains(4));
-		assertEquals(arrayBag.getFrequencyOf(4), 2);
+		assertEquals(2, arrayBag.getFrequencyOf(4));
 		
 		arrayBag.remove();
 		arrayBag.remove();
 		assertTrue(!arrayBag.contains(4));
-		assertEquals(arrayBag.getFrequencyOf(4), 0);
+		assertEquals(0, arrayBag.getFrequencyOf(4));
 		
 		arrayBag.remove(3);
-		assertEquals(arrayBag.getFrequencyOf(3), 1);
+		assertEquals(1, arrayBag.getFrequencyOf(3));
 		
 		arrayBag.clear();
 		assertTrue(arrayBag.isEmpty());
@@ -59,30 +59,30 @@ class BagTest {
 		linkedBag.add(3);
 		linkedBag.add(4);
 		linkedBag.add(4);
-		assertEquals(linkedBag.getCurrentSize(), 7);
+		assertEquals(7, linkedBag.getCurrentSize());
 		
 		assertTrue(linkedBag.contains(0));
-		assertEquals(linkedBag.getFrequencyOf(0), 1);
+		assertEquals(1, linkedBag.getFrequencyOf(0));
 		
 		assertTrue(linkedBag.contains(1));
-		assertEquals(linkedBag.getFrequencyOf(1), 1);
+		assertEquals(1, linkedBag.getFrequencyOf(1));
 		
 		assertTrue(linkedBag.contains(2));
-		assertEquals(linkedBag.getFrequencyOf(2), 1);
+		assertEquals(1, linkedBag.getFrequencyOf(2));
 		
 		assertTrue(linkedBag.contains(3));
-		assertEquals(linkedBag.getFrequencyOf(3), 2);
+		assertEquals(2, linkedBag.getFrequencyOf(3));
 		
 		assertTrue(linkedBag.contains(4));
-		assertEquals(linkedBag.getFrequencyOf(4), 2);
+		assertEquals(2, linkedBag.getFrequencyOf(4));
 		
 		linkedBag.remove();
 		linkedBag.remove();
 		assertTrue(!linkedBag.contains(4));
-		assertEquals(linkedBag.getFrequencyOf(4), 0);
+		assertEquals(0, linkedBag.getFrequencyOf(4));
 		
 		linkedBag.remove(3);
-		assertEquals(linkedBag.getFrequencyOf(3), 1);
+		assertEquals(1, linkedBag.getFrequencyOf(3));
 		
 		linkedBag.clear();
 		assertTrue(linkedBag.isEmpty());

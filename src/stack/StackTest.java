@@ -2,6 +2,8 @@ package stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.EmptyStackException;
+
 import org.junit.jupiter.api.Test;
 
 class StackTest {
@@ -12,22 +14,24 @@ class StackTest {
 		
 		assertTrue(linkedStack.isEmpty());
 		linkedStack.push(0);
-		assertEquals(linkedStack.peek(), 0);
+		assertEquals(0, linkedStack.peek());
 		
 		linkedStack.push(1);
-		assertEquals(linkedStack.peek(), 1);
+		assertEquals(1, linkedStack.peek());
 
 		linkedStack.push(1);
 		linkedStack.push(2);
 		linkedStack.push(3);
-		assertEquals(linkedStack.peek(), 3);
-		assertEquals(linkedStack.pop(), 3);
-		assertEquals(linkedStack.peek(), 2);
-		assertEquals(linkedStack.pop(), 2);
-		assertEquals(linkedStack.peek(), 1);
+		assertEquals(3, linkedStack.peek());
+		assertEquals(3, linkedStack.pop());
+		assertEquals(2, linkedStack.peek());
+		assertEquals(2, linkedStack.pop());
+		assertEquals(1, linkedStack.peek());
 		
 		linkedStack.clear();
 		assertTrue(linkedStack.isEmpty());
+		assertThrows(EmptyStackException.class, () -> linkedStack.pop());
+		assertThrows(EmptyStackException.class, () -> linkedStack.peek());
 	}
 
 }
