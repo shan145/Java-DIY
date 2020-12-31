@@ -71,7 +71,15 @@ public final class LinkedBag<T> implements BagInterface<T>{
 
 	@Override
 	public boolean remove(T anEntry) {
-		return true;
+		boolean removed = false;
+		Node nodeToRemove = getNodeReference(anEntry);
+		if(nodeToRemove != null) {
+			nodeToRemove.setData(headNode.getData());
+			headNode = headNode.getNextNode();
+			numberOfEntries--;
+			removed = true;
+		}
+		return removed;
 	}
 
 	@Override
@@ -103,6 +111,19 @@ public final class LinkedBag<T> implements BagInterface<T>{
 			}
 		}
 		return false;
+	}
+	
+	private Node getNodeReference(T anEntry) {
+		boolean found = false;
+		Node currentNode = headNode;
+		while(!found && currentNode != null) {
+			if(anEntry.equals(currentNode.getData())) {
+				found = true;
+			} else {
+				currentNode = currentNode.getNextNode();
+			}
+		}
+		return currentNode;
 	}
 
 }
