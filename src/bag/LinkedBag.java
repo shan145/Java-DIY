@@ -54,6 +54,7 @@ public final class LinkedBag<T> implements BagInterface<T>{
 		Node newNode = new Node(newEntry); //Add to beginning
 		newNode.setNextNode(headNode);
 		headNode = newNode;
+		numberOfEntries++;
 		
 		return true;
 	}
@@ -85,6 +86,7 @@ public final class LinkedBag<T> implements BagInterface<T>{
 	@Override
 	public void clear() {
 		this.headNode = null;
+		numberOfEntries = 0;
 	}
 
 	@Override
@@ -109,6 +111,7 @@ public final class LinkedBag<T> implements BagInterface<T>{
 			if(anEntry.equals(currentNode.getData())) {
 				return true;
 			}
+			currentNode = currentNode.getNextNode();
 		}
 		return false;
 	}
