@@ -17,7 +17,14 @@ class BagTest {
 		arrayBag.add(3);
 		arrayBag.add(4);
 		arrayBag.add(4);
-		assertEquals(7, arrayBag.getCurrentSize());
+		arrayBag.add(5);
+		arrayBag.add(5);
+		arrayBag.add(6); 
+		
+		assertEquals(10, arrayBag.getCurrentSize());
+		
+		arrayBag.add(6); 
+		assertEquals(11, arrayBag.getCurrentSize()); //Test if resizing works properly (default capacity is 10)
 		
 		assertTrue(arrayBag.contains(0));
 		assertEquals(1, arrayBag.getFrequencyOf(0));
@@ -34,16 +41,23 @@ class BagTest {
 		assertTrue(arrayBag.contains(4));
 		assertEquals(2, arrayBag.getFrequencyOf(4));
 		
+		assertTrue(arrayBag.contains(5));
+		assertEquals(2, arrayBag.getFrequencyOf(5));
+		
+		assertTrue(arrayBag.contains(6));
+		assertEquals(2, arrayBag.getFrequencyOf(6));
+		
 		arrayBag.remove();
 		arrayBag.remove();
-		assertTrue(!arrayBag.contains(4));
-		assertEquals(0, arrayBag.getFrequencyOf(4));
+		assertTrue(!arrayBag.contains(6));
+		assertEquals(0, arrayBag.getFrequencyOf(6));
 		
 		arrayBag.remove(3);
 		assertEquals(1, arrayBag.getFrequencyOf(3));
 		
 		arrayBag.clear();
 		assertTrue(arrayBag.isEmpty());
+		
 	}
 	
 	@Test

@@ -1,28 +1,25 @@
 package bag;
 
+import java.util.Arrays;
+
 public final class ArrayBag<T> implements BagInterface<T> {
 
-	private final T[] bag;
+	private T[] bag;
 	private int numberOfEntries;
 	
 	private boolean initialized = false;
-	private static final int MAX_CAPACITY = 10000;
-	private static final int DEFAULT_CAPACITY = 25;
+	private static final int DEFAULT_CAPACITY = 10;
 	
 	public ArrayBag() {
 		this(DEFAULT_CAPACITY);
 	}
 	
 	public ArrayBag(int capacity) {
-		if(capacity < MAX_CAPACITY) {
-			@SuppressWarnings("unchecked")
-			T[] tempBag = (T[])new Object[capacity];
-			this.bag = tempBag;
-			this.numberOfEntries = 0;
-			this.initialized = true;
-		} else {
-			throw new IllegalStateException("Tried to create bag above max capacity of 10000");
-		}
+		@SuppressWarnings("unchecked")
+		T[] tempBag = (T[])new Object[capacity];
+		this.bag = tempBag;
+		this.numberOfEntries = 0;
+		this.initialized = true;
 	}
 	
 	@Override
@@ -38,12 +35,12 @@ public final class ArrayBag<T> implements BagInterface<T> {
 	@Override
 	public boolean add(T newEntry) {
 		checkInitialization();
-		if(numberOfEntries < DEFAULT_CAPACITY) {
-			bag[numberOfEntries] = newEntry;
-			numberOfEntries++;
-			return true;
+		if(isArrayFull()) {
+			doubleCapacity();
 		}
-		return false;
+		bag[numberOfEntries] = newEntry;
+		numberOfEntries++;
+		return true;
 	}
 
 	@Override
@@ -118,10 +115,18 @@ public final class ArrayBag<T> implements BagInterface<T> {
 		return where;
 	}
 	
+	private boolean isArrayFull() {
+		return numberOfEntries == bag.length;
+	}
+	
 	private void checkInitialization() {
 		if(!this.initialized) {
 			throw new SecurityException("ArrayBag object is not initialized properly");
 		}
 	}
 	
+	private void doubleCapacity() {
+		int newLength = 2 * bag.length;
+		bag = Arrays.copyOf(bag, newLength);
+	}
 }
